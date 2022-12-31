@@ -58,7 +58,7 @@ app.post('/addToCart' , async (req , res)=>{
         const result = await cartCollection.insertOne(product);
         res.send(result);
     } catch (error) {
-        
+        console.log(error.message);
     }
 })
 
@@ -73,7 +73,29 @@ app.get('/users/role/:email' , async(req , res)=>{
     }
 })
 
+app.get('/cartProducts/:email' , async(req , res)=>{
+    try {
+        const email = req.params.email;
+        const query = {buyrEamil: email}
+        const cartProducts = await cartCollection.find(query).toArray()
+        res.send(cartProducts)
 
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
+
+app.delete('/cartProductDelte/:id' , async(req , res)=>{
+   try {
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)}
+    const deletedProduct = await cartCollection.deleteOne(query)
+    res.send(deletedProduct)
+   } catch (error) {
+    
+   }
+})
 
 dbConnect()
 
