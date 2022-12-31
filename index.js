@@ -13,6 +13,9 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 const usersCollection = client.db('PhoneMarket').collection('users')
 const productsCollection = client.db('PhoneMarket').collection('products')
+const cartCollection = client.db('PhoneMarket').collection('cartCollection')
+
+
 app.get('/' , (req , res)=>{
     res.send('server running')
 })
@@ -48,6 +51,27 @@ app.put('/users' , async(req , res)=>{
     }
 })
 
+
+app.post('/addToCart' , async (req , res)=>{
+    try {
+        const product = req.body;
+        const result = await cartCollection.insertOne(product);
+        res.send(result);
+    } catch (error) {
+        
+    }
+})
+
+app.get('/users/role/:email' , async(req , res)=>{
+    try {
+        const email = req.params.email
+        const query = {email: email}
+        const user = await usersCollection.findOne(query)
+        res.send(user)
+    } catch (error) {
+        
+    }
+})
 
 
 
