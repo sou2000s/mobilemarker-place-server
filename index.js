@@ -38,7 +38,15 @@ app.get('/products' , async(req , res)=>{
     }
 })
 
-
+app.put('/users' , async(req , res)=>{
+    try {
+        const user = req.body;
+        const result = await usersCollection.insertOne(user)
+        res.send(result)
+    } catch (error) {
+        console.log(error.message);
+    }
+})
 
 
 
