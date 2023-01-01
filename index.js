@@ -97,8 +97,19 @@ app.delete('/cartProductDelte/:id' , async(req , res)=>{
    }
 })
 
+app.post('/addproducts' , async(req , res)=>{
+    try {
+        const product = req.body;
+        const adededProduct = await productsCollection.insertOne(product)
+        res.send(adededProduct)
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
 dbConnect()
 
 app.listen(port , ()=>{
     console.log(`server running on port ${port}`);
 })
+
