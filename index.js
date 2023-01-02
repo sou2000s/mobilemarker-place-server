@@ -41,7 +41,8 @@ app.get('/products' , async(req , res)=>{
     }
 })
 
-app.put('/users' , async(req , res)=>{
+app.post('/users' , async(req , res)=>{
+    
     try {
         const user = req.body;
         const result = await usersCollection.insertOne(user)
